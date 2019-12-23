@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.oldz.community.dao.LoginTicketMapper">
+  <resultMap id="BaseResultMap" type="xyz.oldz.community.entity.LoginTicket">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    <result column="ticket" jdbcType="VARCHAR" property="ticket"/>
+    <result column="status" jdbcType="INTEGER" property="status"/>
+    <result column="expired" jdbcType="TIMESTAMP" property="expired"/>
+  </resultMap>
+  <update id="updateStatus">
+    update login_ticket set status=#{status} where ticket=#{ticket}
+  </update>
+  <select id="selectByTicket" resultMap="BaseResultMap">
+    select * from login_ticket where ticket=#{ticket}
+  </select>
+</mapper>

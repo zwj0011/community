@@ -3,6 +3,7 @@ package xyz.oldz.community.entity;
 import java.util.Date;
 import javax.persistence.*;
 import lombok.Data;
+import tk.mybatis.mapper.annotation.KeySql;
 
 /**
  * @author lz
@@ -12,6 +13,7 @@ import lombok.Data;
 public class User {
 
   @Id
+  @KeySql(useGeneratedKeys = true)
   private Integer id;
 
   private String username;

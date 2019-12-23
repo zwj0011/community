@@ -1,3 +1,4 @@
+var CONTEXT_PATH="/community";
 window.alert = function(message) {
 	if(!$(".alert-box").length) {
 		$("body").append(
@@ -22,7 +23,7 @@ window.alert = function(message) {
 		);
 	}
 
-    var h = $(".alert-box").height();
+	var h = $(".alert-box").height();
 	var y = h / 2 - 100;
 	if(h > 600) y -= 100;
     $(".alert-box .modal-dialog").css("margin", (y < 0 ? 0 : y) + "px auto");

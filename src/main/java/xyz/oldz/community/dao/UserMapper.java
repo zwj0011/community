@@ -7,4 +7,7 @@ import xyz.oldz.community.entity.User;
  * @author lz
  */
 public interface UserMapper extends Mapper<User> {
+  User selectByUserName(String username);
+
+  User selectByEmail(String email);
 }

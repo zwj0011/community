@@ -29,6 +29,7 @@
       type="XMLMAPPER"/>
 
 <!--    <table tableName="user" domainObjectName="User"/>-->
-    <table tableName="discuss_post" domainObjectName="DiscussPost"/>
+<!--    <table tableName="discuss_post" domainObjectName="DiscussPost"/>-->
+    <table tableName="login_ticket" domainObjectName="LoginTicket"/>
   </context>
 </generatorConfiguration>
