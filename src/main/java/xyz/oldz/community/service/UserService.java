@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import javax.jws.soap.SOAPBinding.Use;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -145,7 +146,8 @@ public class UserService implements CommunityConstant {
     //验证密码
     password = CommunityUtil.md5(password) + user.getSalt();
     if (!StringUtils.equals(password, user.getPassword())) {
-      map.put("passwordMsg", "密码不存在");
+      map.put("passwordMsg", "密码错误");
+      return map;
     }
 
     LoginTicket loginTicket = new LoginTicket();
@@ -168,5 +170,33 @@ public class UserService implements CommunityConstant {
 
   public LoginTicket findLoginTicket(String ticket) {
     return loginTicketMapper.selectByTicket(ticket);
+  }
+
+  public int updateHeader(int userId, String headerUrl) {
+    User user = userMapper.selectByPrimaryKey(userId);
+    if (user == null) {
+      return 0;
+    }
+    user.setHeaderUrl(headerUrl);
+    return userMapper.updateByPrimaryKeySelective(user);
+  }
+
+  public Map<String, Object> changPassword(int userId, String oldPassword, String newPassword) {
+    Map<String, Object> map = new HashMap<>();
+    User user = userMapper.selectByPrimaryKey(userId);
+    if (user == null) {
+      map.put("msg", "当前用户已失效");
+    }
+    oldPassword = CommunityUtil.md5(oldPassword) + user.getSalt();
+    if (!StringUtils.equals(user.getPassword(), oldPassword)) {
+      map.put("oldPasswordMsg", "原密码错误");
+      return map;
+    }
+    String newSalt = CommunityUtil.generateUUID().substring(0, 5);
+    newPassword = CommunityUtil.md5(newPassword) + newSalt;
+    user.setSalt(newSalt);
+    user.setPassword(newPassword);
+    userMapper.updateByPrimaryKeySelective(user);
+    return map;
   }
 }

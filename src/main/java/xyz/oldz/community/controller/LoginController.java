@@ -129,4 +129,5 @@ public class LoginController implements CommunityConstant {
     userService.logout(ticket);
     return "redirect:/login";
   }
+
 }
